@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Sgff0t6TJHDkV/sFKeexFlNiKOoptbdNNe0KM0qmNGEnGtgHUFwnkknWoV5sbWg3tyjhOnQWOQw9ayYtwdH23w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\PAVLE\\source\\repos\\Text Editor\\Text Editor\\Text Editor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\PAVLE\\.nuget\\packages\\avalonedit\\6.0.1\\avalonedit.6.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
