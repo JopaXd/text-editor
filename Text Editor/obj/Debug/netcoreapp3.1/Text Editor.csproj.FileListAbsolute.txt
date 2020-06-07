@@ -3,3 +3,19 @@ C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Main
 C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\App.g.cs
 C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor_MarkupCompile.cache
 C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor_MarkupCompile.lref
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\Text Editor.exe
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\Text Editor.deps.json
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\Text Editor.runtimeconfig.json
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\Text Editor.runtimeconfig.dev.json
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\Text Editor.dll
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\Text Editor.pdb
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\bin\Debug\netcoreapp3.1\ICSharpCode.AvalonEdit.dll
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\MainWindow.baml
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.g.resources
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.csproj.CoreCompileInputs.cache
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.AssemblyInfoInputs.cache
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.AssemblyInfo.cs
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.csproj.CopyComplete
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.dll
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.pdb
+C:\Users\PAVLE\source\repos\Text Editor\Text Editor\obj\Debug\netcoreapp3.1\Text Editor.genruntimeconfig.cache

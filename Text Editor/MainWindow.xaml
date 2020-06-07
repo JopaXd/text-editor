@@ -7,6 +7,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Menu Foreground="White" Background="#212121" DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Foreground="Black" Header="_Open"/>
+                <MenuItem Foreground="Black" Header="_Close"/>
+                <MenuItem Foreground="Black" Header="_Save"/>
+            </MenuItem>
+        </Menu>
+        <TreeView HorizontalAlignment="Left" Width="200" Background="#424242" Margin="0,19,0,0">
+            <TreeViewItem Foreground="White" Header="Python">
+                <TreeViewItem Foreground="White" Header="Scrapy Script"></TreeViewItem>
+                <TreeViewItem Foreground="White" Header="ColorToHex Function"></TreeViewItem>
+                <TreeViewItem Foreground="White" Header="Basic Decorator"></TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+        <avalonEdit:TextEditor
+            Background="#212121"
+            Foreground="White"
+            xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+            Name="mainEditor"
+            SyntaxHighlighting="Python"
+            FontFamily="Dank Mono"
+            FontSize="13px" Margin="200,19,0,-19"/>
     </Grid>
 </Window>
