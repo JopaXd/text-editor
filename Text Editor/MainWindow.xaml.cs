@@ -24,115 +24,79 @@ namespace Text_Editor
             InitializeComponent();
         }
 
-        //public static class Globals{
-        //    public static string path;
-        //    public static dynamic parent;
-        //}
+        public static class Globals {
+            public static string path;
+        }
 
-        //private void listOtherDirs(object sender, RoutedEventArgs e) {
-        //    //Get clicked item.
-        //    //This kind of works. Struggling to get the parent of the current element. I need that to be able to access a folder in a folder in a folder...
-        //    dynamic dirObj = e.Source;
-        //    dirObj.Items.Clear();
-        //    bool whSwitch = false;
-        //    List<string> parentFolders = new List<string>();
-        //    while (true) {
-        //        try
-        //        {
-        //            if (whSwitch == false)
-        //            {
-        //                Globals.parent = VisualTreeHelper.GetParent(dirObj);
-        //                string folderName = Globals.parent.Header.ToString();
-        //                parentFolders.Add(folderName);
-        //                whSwitch = true;
-        //            }
-        //            else {
-        //                Globals.parent = VisualTreeHelper.GetParent(Globals.parent);
-        //            }
-        //        }
-        //        catch {
-        //            break;
-        //        }
-        //    }
-        //    TreeViewItem emptyE = new TreeViewItem() { Header = "empty", Name = "empty" };
-        //    if (parentFolders.Count == 0) {
-        //        string path = Globals.path + @"\" + dirObj.Header.ToString();
-        //        string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
-        //        foreach (string fileOrFolder in foldersAndFiles)
-        //        {
-        //            if (System.IO.Path.HasExtension(fileOrFolder))
-        //            {
-        //                //File
-        //                string fNameH = System.IO.Path.GetFileName(fileOrFolder);
-        //                string fName = fNameH.Replace(".", "");
-        //                dirObj.Items.Add(new TreeViewItem() { Header = fNameH, Name = fName });
-        //            }
-        //            else
-        //            {
-        //                //Folder
-        //                string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
-        //                string dirName = Strings.RemoveSpecialCharacters(dirNameH);
-        //                TreeViewItem newDir = new TreeViewItem() { Header = dirNameH, Name = dirName };
-        //                newDir.AddHandler(Button.ClickEvent, new RoutedEventHandler(listOtherDirs));
-        //                TreeViewItem empty = new TreeViewItem() { Header = "empty", Name = "empty" };
-        //                newDir.Items.Add(empty);
-        //                dirObj.Items.Add(newDir);
-        //            }
-        //        }
-        //    }
-        //}
+        static TreeViewItem GetParentItem(TreeViewItem item)
+        {
+            for (var i = VisualTreeHelper.GetParent(item); i != null; i = VisualTreeHelper.GetParent(i))
+                if (i is TreeViewItem)
+                    return (TreeViewItem)i;
 
-        //private void OpenFolder(object sender, RoutedEventArgs e)
-        //{
-        //    //For now will use a static folder.
-        //    //Not working quite well.
-        //    //string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
-        //    //foreach (string fileOrFolder in foldersAndFiles) {
-        //    //    if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", path, fileOrFolder)))
-        //    //    {
-        //    //        string fNameH = System.IO.Path.GetFileName(fileOrFolder);
-        //    //        string fName = fNameH.Replace(".", "");
-        //    //        this.fsTree.Items.Add(new TreeViewItem() { Header = fNameH, Name=fName });
-        //    //    }
-        //    //    else {
-        //    //        string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
-        //    //        string dirName = Strings.RemoveSpecialCharacters(dirNameH);
-        //    //        string[] foldersAndFilesChild = Directory.GetFileSystemEntries(fileOrFolder);
-        //    //        foreach (string fleOrFldr in foldersAndFilesChild) {
-        //    //            TreeViewItem newDir = new TreeViewItem() { Header = dirNameH, Name = dirName };
-        //    //            if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", path, fleOrFldr)))
-        //    //            {
-        //    //                string fNameH = System.IO.Path.GetFileName(fleOrFldr);
-        //    //                string fName = fNameH.Replace(".", "");
-        //    //                newDir.Items.Add(new TreeViewItem() { Header = fNameH, Name = fName });
-        //    //            }
-        //    //        this.fsTree.Items.Add(newDir);
-        //    //        }
-        //    //    }
-        //    //}
-        //    string path = @"D:\FileExplorerTest";
-        //    Globals.path = path;
-        //    string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
-        //    foreach (string fileOrFolder in foldersAndFiles) {
-        //        if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", path, fileOrFolder)))
-        //        {
-        //            //File
-        //            string fNameH = System.IO.Path.GetFileName(fileOrFolder);
-        //            string fName = fNameH.Replace(".", "");
-        //            this.fsTree.Items.Add(new TreeViewItem() { Header = fNameH, Name = fName });
-        //        }
-        //        else {
-        //            //Folder
-        //            string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
-        //            string dirName = Strings.RemoveSpecialCharacters(dirNameH);
-        //            TreeViewItem newDir = new TreeViewItem() { Header = dirNameH, Name = dirName };
-        //            newDir.AddHandler(Button.ClickEvent, new RoutedEventHandler(listOtherDirs) );
-        //            TreeViewItem empty = new TreeViewItem() { Header = "empty", Name = "empty" };
-        //            newDir.Items.Add(empty);
-        //            this.fsTree.Items.Add(newDir);
-        //        }
-        //    }
-        //}
+            return null;
+        }
+            private void listOtherDirs(object sender, RoutedEventArgs e) {
+            var node = (TreeViewItem)e.Source;
+            node.Items.Clear();
+            var result = Convert.ToString(node.Header);
+
+            for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
+                result = i.Header + "\\" + result;
+
+            //MessageBox.Show(result, result);
+            string pathToLoad = String.Format("{0}\\{1}", Globals.path, result);
+            string[] foldersAndFiles = Directory.GetFileSystemEntries(pathToLoad);
+            foreach (string fileOrFolder in foldersAndFiles)
+            {
+                if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", pathToLoad, fileOrFolder)))
+                {
+                    //File
+                    string fNameH = System.IO.Path.GetFileName(fileOrFolder);
+                    string fName = fNameH.Replace(".", "");
+                    node.Items.Add(new TreeViewItem() { Header = fNameH, Name = fName });
+                }
+                else
+                {
+                    //Folder
+                    string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
+                    string dirName = Strings.RemoveSpecialCharacters(dirNameH);
+                    TreeViewItem newDir = new TreeViewItem() { Header = dirNameH, Name = dirName };
+                    newDir.AddHandler(Button.ClickEvent, new RoutedEventHandler(listOtherDirs));
+                    TreeViewItem empty = new TreeViewItem() { Header = "empty", Name = "empty" };
+                    newDir.Items.Add(empty);
+                    node.Items.Add(newDir);
+                }
+            }
+        }
+
+        private void OpenFolder(object sender, RoutedEventArgs e)
+        {
+            string path = @"D:\FileExplorerTest";
+            Globals.path = @"D:\FileExplorerTest";
+            string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
+            foreach (string fileOrFolder in foldersAndFiles)
+            {
+                if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", path, fileOrFolder)))
+                {
+                    //File
+                    string fNameH = System.IO.Path.GetFileName(fileOrFolder);
+                    string fName = fNameH.Replace(".", "");
+                    this.fsTree.Items.Add(new TreeViewItem() { Header = fNameH, Name = fName });
+                }
+                else
+                {
+                    //Folder
+                    string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
+                    string dirName = Strings.RemoveSpecialCharacters(dirNameH);
+                    TreeViewItem newDir = new TreeViewItem() { Header = dirNameH, Name = dirName };
+                    newDir.AddHandler(Button.ClickEvent, new RoutedEventHandler(listOtherDirs));
+                    TreeViewItem empty = new TreeViewItem() { Header = "empty", Name = "empty" };
+                    newDir.Items.Add(empty);
+                    this.fsTree.Items.Add(newDir);
+                }
+            }
+        }
 
         private void Exit(object sender, RoutedEventArgs e)
         {
