@@ -185,22 +185,20 @@ namespace Text_Editor
             TextBlock tblock = GetChildOfType<TextBlock>(node);
             var result = tblock.Text;
             for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
-                result = i.Header + "\\" + result;
-                result = result.Replace("📁 ", "");
+                result = GetChildOfType<TextBlock>(i).Text + "\\" + result;
             MessageBox.Show(result, "test");
         }
         private void listOtherDirs(object sender, RoutedEventArgs e) {
             var node = (TreeViewItem)e.Source;
             node.Items.Clear();
-            var result = Convert.ToString(node.Header);
+            TextBlock tblock = GetChildOfType<TextBlock>(node);
+            var result = tblock.Text;
 
             for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
-                result = i.Header + "\\" + result;
+                result = GetChildOfType<TextBlock>(i).Text + "\\" + result;
 
             //MessageBox.Show(result, result);
             string pathToLoad = String.Format("{0}\\{1}", Globals.path, result);
-            //Have to remove the folder character (including that little space there) to get the correct path.
-            pathToLoad = pathToLoad.Replace("📁 ", "");
             //For now i had an idea. To load a file, i will use the result, check if it has an extension and then work from there.
             string[] foldersAndFiles = Directory.GetFileSystemEntries(pathToLoad);
             foreach (string fileOrFolder in foldersAndFiles)
@@ -231,9 +229,22 @@ namespace Text_Editor
                 else
                 {
                     //Folder
+                    Orientation hOrientation = Orientation.Horizontal;
+                    StackPanel container = new StackPanel() { Orientation = hOrientation };
+                    Image folderIcon = new Image() { };
+                    string workingDirectory = Environment.CurrentDirectory;
+                    string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+                    string iconsDirectory = String.Format(@"{0}\FileIcons", projectDirectory);
+                    Globals.iconsDirectory = iconsDirectory;
                     string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
                     string dirName = Strings.RemoveSpecialCharacters(dirNameH);
-                    TreeViewItem newDir = new TreeViewItem() { Header = "📁 " + dirNameH, Name = dirName };
+                    string icon = String.Format(@"{0}\folder.png", iconsDirectory);
+                    folderIcon.Source = new BitmapImage(new Uri(icon));
+                    container.Children.Add(folderIcon);
+                    TextBlock fileName = new TextBlock() { Name = "folderName", Text = dirNameH };
+                    fileName.Foreground = new SolidColorBrush(Colors.White);
+                    container.Children.Add(fileName);
+                    TreeViewItem newDir = new TreeViewItem() { Header = container, Name = dirName };
                     newDir.Foreground = new SolidColorBrush(Colors.White);
                     newDir.AddHandler(Button.ClickEvent, new RoutedEventHandler(listOtherDirs));
                     TreeViewItem empty = new TreeViewItem() { Header = "empty", Name = "empty" };
@@ -276,9 +287,22 @@ namespace Text_Editor
                 else
                 {
                     //Folder
+                    Orientation hOrientation = Orientation.Horizontal;
+                    StackPanel container = new StackPanel() { Orientation = hOrientation };
+                    Image folderIcon = new Image() { };
+                    string workingDirectory = Environment.CurrentDirectory;
+                    string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+                    string iconsDirectory = String.Format(@"{0}\FileIcons", projectDirectory);
+                    Globals.iconsDirectory = iconsDirectory;
                     string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
                     string dirName = Strings.RemoveSpecialCharacters(dirNameH);
-                    TreeViewItem newDir = new TreeViewItem() { Header = "📁 " + dirNameH, Name = dirName };
+                    string icon = String.Format(@"{0}\folder.png", iconsDirectory);
+                    folderIcon.Source = new BitmapImage(new Uri(icon));
+                    container.Children.Add(folderIcon);
+                    TextBlock fileName = new TextBlock() { Name = "folderName", Text = dirNameH };
+                    fileName.Foreground = new SolidColorBrush(Colors.White);
+                    container.Children.Add(fileName);
+                    TreeViewItem newDir = new TreeViewItem() { Header = container, Name = dirName };
                     newDir.Foreground = new SolidColorBrush(Colors.White);
                     newDir.AddHandler(Button.ClickEvent, new RoutedEventHandler(listOtherDirs));
                     TreeViewItem empty = new TreeViewItem() { Header = "empty", Name = "empty" };
