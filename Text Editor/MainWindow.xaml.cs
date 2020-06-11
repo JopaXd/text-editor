@@ -163,8 +163,31 @@ namespace Text_Editor
             for (var i = VisualTreeHelper.GetParent(item); i != null; i = VisualTreeHelper.GetParent(i))
                 if (i is TreeViewItem)
                     return (TreeViewItem)i;
-
             return null;
+        }
+
+        public static T GetChildOfType<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj == null) return null;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(depObj, i);
+
+                var result = (child as T) ?? GetChildOfType<T>(child);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        private void loadFile(object sender, RoutedEventArgs e) {
+            var node = (TreeViewItem)e.Source;
+            TextBlock tblock = GetChildOfType<TextBlock>(node);
+            var result = tblock.Text;
+            for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
+                result = i.Header + "\\" + result;
+                result = result.Replace("📁 ", "");
+            MessageBox.Show(result, "test");
         }
         private void listOtherDirs(object sender, RoutedEventArgs e) {
             var node = (TreeViewItem)e.Source;
@@ -198,10 +221,12 @@ namespace Text_Editor
                     string icon = getIconByFormat(fNameH);
                     fileIcon.Source = new BitmapImage(new Uri(icon));
                     container.Children.Add(fileIcon);
-                    TextBlock fileName = new TextBlock() { Text = fNameH };
+                    TextBlock fileName = new TextBlock() { Name="fileName", Text = fNameH };
                     fileName.Foreground = new SolidColorBrush(Colors.White);
                     container.Children.Add(fileName);
-                    node.Items.Add(new TreeViewItem() { Header = container, Name = fName });
+                    TreeViewItem file = new TreeViewItem() { Header = container, Name = fName };
+                    file.AddHandler(TreeViewItem.SelectedEvent, new RoutedEventHandler(loadFile));
+                    node.Items.Add(file);
                 }
                 else
                 {
@@ -244,7 +269,9 @@ namespace Text_Editor
                     TextBlock fileName = new TextBlock() { Text = fNameH };
                     fileName.Foreground = new SolidColorBrush(Colors.White);
                     container.Children.Add(fileName);
-                    this.fsTree.Items.Add(new TreeViewItem() { Header = container, Name = fName });
+                    TreeViewItem file = new TreeViewItem() { Header = container, Name = fName };
+                    file.AddHandler(TreeViewItem.SelectedEvent, new RoutedEventHandler(loadFile));
+                    this.fsTree.Items.Add(file);
                 }
                 else
                 {
