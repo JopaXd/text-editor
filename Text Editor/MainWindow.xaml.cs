@@ -98,13 +98,14 @@ namespace Text_Editor
             }
             else if (format.EndsWith(".java"))
             {
-                iconPath = String.Format(@"{0}\file_type_markup.png", Globals.iconsDirectory);
+                iconPath = String.Format(@"{0}\file_type_java.png", Globals.iconsDirectory);
             }
             else if (format.EndsWith(".json"))
             {
                 iconPath = String.Format(@"{0}\file_type_json.png", Globals.iconsDirectory);
             }
-            else if (format == "Dockerfile") {
+            else if (format == "Dockerfile")
+            {
                 iconPath = String.Format(@"{0}\file_type_docker.png", Globals.iconsDirectory);
             }
             else if (format.EndsWith(".ex"))
@@ -155,6 +156,9 @@ namespace Text_Editor
             {
                 iconPath = String.Format(@"{0}\file_type_dlang.png", Globals.iconsDirectory);
             }
+            else { 
+                iconPath = String.Format(@"{0}\file_type_text.png", Globals.iconsDirectory);
+            }
             return iconPath;
         }
 
@@ -180,13 +184,150 @@ namespace Text_Editor
             return null;
         }
 
+        private void setSyntax(string format) {
+            if (format.EndsWith(".cs"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#");
+            }
+            else if (format.EndsWith(".py"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Python");
+            }
+            else if (format.EndsWith(".rb"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Ruby");
+            }
+            else if (format.EndsWith(".js"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JavaScript");
+            }
+            else if (format.EndsWith(".ts"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JavaScript");
+            }
+            else if (format.EndsWith(".vue"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JavaScript");
+            }
+            else if (format.EndsWith(".bat"))
+            {
+                //No syntax.
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+            }
+            else if (format.EndsWith(".sh"))
+            {
+                //No syntax.
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+            }
+            else if (format.EndsWith(".css"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("CSS");
+            }
+            else if (format.EndsWith(".html"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("HTML");
+            }
+            else if (format.EndsWith(".jsx"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JavaScript");
+            }
+            else if (format.EndsWith(".c"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C++");
+            }
+            else if (format.EndsWith(".cpp") || format.EndsWith(".h"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C++");
+            }
+            else if (format.EndsWith(".dart"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".md"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".php"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("PHP");
+            }
+            else if (format.EndsWith(".java"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Java");
+            }
+            else if (format.EndsWith(".json"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("JavaScript");
+            }
+            else if (format == "Dockerfile")
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".ex"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".kt"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".xml"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".sql"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".r"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".scss"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".hs"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".lua"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".go"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+            else if (format.EndsWith(".d"))
+            {
+                this.mainEditor.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Text");
+                //No syntax.
+            }
+        }
+
         private void loadFile(object sender, RoutedEventArgs e) {
             var node = (TreeViewItem)e.Source;
             TextBlock tblock = GetChildOfType<TextBlock>(node);
             var result = tblock.Text;
             for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
                 result = GetChildOfType<TextBlock>(i).Text + "\\" + result;
-            MessageBox.Show(result, "test");
+            string pathToFile = Globals.path + @"\" + result;
+            string code = File.ReadAllText(pathToFile);
+            this.mainEditor.Text = code;
+            setSyntax(result);
         }
         private void listOtherDirs(object sender, RoutedEventArgs e) {
             var node = (TreeViewItem)e.Source;
