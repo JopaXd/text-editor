@@ -325,8 +325,10 @@ namespace Text_Editor
             for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
                 result = GetChildOfType<TextBlock>(i).Text + "\\" + result;
             string pathToFile = Globals.path + @"\" + result;
-            string code = File.ReadAllText(pathToFile);
-            this.mainEditor.Text = code;
+            this.mainEditor.Load(pathToFile);
+            //this.mainEditor.Save("");
+            //this.mainEditor.Undo();
+            //this.mainEditor.Redo();
             setSyntax(result);
         }
         private void listOtherDirs(object sender, RoutedEventArgs e) {
