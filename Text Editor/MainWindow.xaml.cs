@@ -27,6 +27,7 @@ namespace Text_Editor
         public static class Globals {
             public static string path;
             public static string iconsDirectory;
+            public static string currentOpenFilePath;
         }
 
         private string getIconByFormat(string format) {
@@ -327,9 +328,8 @@ namespace Text_Editor
             string pathToFile = Globals.path + @"\" + result;
             this.mainEditor.Load(pathToFile);
             //this.mainEditor.Save("");
-            //this.mainEditor.Undo();
-            //this.mainEditor.Redo();
             setSyntax(result);
+            Globals.currentOpenFilePath = pathToFile;
         }
         private void listOtherDirs(object sender, RoutedEventArgs e) {
             var node = (TreeViewItem)e.Source;
@@ -400,8 +400,16 @@ namespace Text_Editor
         private void OpenFolder(object sender, RoutedEventArgs e)
         {
             //For now working with a static path.
-            string path = @"D:\FileExplorerTest";
-            Globals.path = @"D:\FileExplorerTest";
+            string path;
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult dlg = dialog.ShowDialog();
+                path = dialog.SelectedPath;
+            }
+            if (String.IsNullOrEmpty(path)) {
+                return;
+            }
+            Globals.path = path;
             string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
             foreach (string fileOrFolder in foldersAndFiles)
             {
@@ -453,6 +461,34 @@ namespace Text_Editor
                     this.fsTree.Items.Add(newDir);
                 }
             }
+        }
+
+        private void Save(object sender, RoutedEventArgs e) {
+            this.mainEditor.Save(Globals.currentOpenFilePath);
+        }
+
+        private void SaveAs(object sender, RoutedEventArgs e) {
+            string path;
+            using (var dialog = new System.Windows.Forms.SaveFileDialog())
+            {
+                dialog.Filter = "All files (*.*)|*.*";
+                System.Windows.Forms.DialogResult dlg = dialog.ShowDialog();
+                path = dialog.FileName;
+            }
+            if (String.IsNullOrEmpty(path))
+            {
+                return;
+            }
+            this.mainEditor.Save(path);
+        }
+
+        private void Undo(object sender, RoutedEventArgs e) {
+            this.mainEditor.Undo();
+        }
+
+        private void Redo(object sender, RoutedEventArgs e)
+        {
+            this.mainEditor.Redo();
         }
 
         private void Exit(object sender, RoutedEventArgs e)

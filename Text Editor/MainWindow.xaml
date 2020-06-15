@@ -10,9 +10,13 @@
         <Menu Foreground="White" Background="#212121" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Foreground="Black" Header="_Open" Click="OpenFolder"/>
-                <MenuItem Foreground="Black" Header="_Save"/>
-                <MenuItem Foreground="Black" Header="_Save As"/>
+                <MenuItem Foreground="Black" Header="_Save" Click="Save"/>
+                <MenuItem Foreground="Black" Header="_Save As" Click="SaveAs"/>
                 <MenuItem Foreground="Black" Header="_Exit" Click="Exit"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Foreground="Black" Header="_Undo" Click="Undo"/>
+                <MenuItem Foreground="Black" Header="_Redo" Click="Redo"/>
             </MenuItem>
         </Menu>
         <TreeView Name="fsTree" HorizontalAlignment="Left" Width="200" BorderBrush="#424242" Background="#424242" Margin="0,19,0,0">
