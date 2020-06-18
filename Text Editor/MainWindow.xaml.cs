@@ -399,7 +399,6 @@ namespace Text_Editor
 
         private void OpenFolder(object sender, RoutedEventArgs e)
         {
-            //For now working with a static path.
             string path;
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
@@ -409,6 +408,7 @@ namespace Text_Editor
             if (String.IsNullOrEmpty(path)) {
                 return;
             }
+            this.fsTree.Items.Clear();
             Globals.path = path;
             string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
             foreach (string fileOrFolder in foldersAndFiles)
