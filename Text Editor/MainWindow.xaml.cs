@@ -342,8 +342,8 @@ namespace Text_Editor
 
             //MessageBox.Show(result, result);
             string pathToLoad = String.Format("{0}\\{1}", Globals.path, result);
-            //For now i had an idea. To load a file, i will use the result, check if it has an extension and then work from there.
             string[] foldersAndFiles = Directory.GetFileSystemEntries(pathToLoad);
+            //Now, i'm not using open() function because this doesn't add elements to the root of TreeView.
             foreach (string fileOrFolder in foldersAndFiles)
             {
                 if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", pathToLoad, fileOrFolder)))
@@ -365,6 +365,7 @@ namespace Text_Editor
                     TextBlock fileName = new TextBlock() { Name="fileName", Text = fNameH };
                     fileName.Foreground = new SolidColorBrush(Colors.White);
                     container.Children.Add(fileName);
+                    fName = Strings.RemoveSpecialCharacters(fName);
                     TreeViewItem file = new TreeViewItem() { Header = container, Name = fName };
                     file.AddHandler(TreeViewItem.SelectedEvent, new RoutedEventHandler(loadFile));
                     node.Items.Add(file);
@@ -397,19 +398,7 @@ namespace Text_Editor
             }
         }
 
-        private void OpenFolder(object sender, RoutedEventArgs e)
-        {
-            string path;
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                System.Windows.Forms.DialogResult dlg = dialog.ShowDialog();
-                path = dialog.SelectedPath;
-            }
-            if (String.IsNullOrEmpty(path)) {
-                return;
-            }
-            this.fsTree.Items.Clear();
-            Globals.path = path;
+        private void open(string path) {
             string[] foldersAndFiles = Directory.GetFileSystemEntries(path);
             foreach (string fileOrFolder in foldersAndFiles)
             {
@@ -425,6 +414,7 @@ namespace Text_Editor
                     Globals.iconsDirectory = iconsDirectory;
                     string fNameH = System.IO.Path.GetFileName(fileOrFolder);
                     string fName = fNameH.Replace(".", "");
+                    fName = Strings.RemoveSpecialCharacters(fName);
                     string icon = getIconByFormat(fNameH);
                     fileIcon.Source = new BitmapImage(new Uri(icon));
                     container.Children.Add(fileIcon);
@@ -463,6 +453,22 @@ namespace Text_Editor
             }
         }
 
+        private void OpenFolder(object sender, RoutedEventArgs e)
+        {
+            string path;
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult dlg = dialog.ShowDialog();
+                path = dialog.SelectedPath;
+            }
+            if (String.IsNullOrEmpty(path)) {
+                return;
+            }
+            this.fsTree.Items.Clear();
+            Globals.path = path;
+            open(path);
+        }
+
         private void Save(object sender, RoutedEventArgs e) {
             this.mainEditor.Save(Globals.currentOpenFilePath);
         }
@@ -480,6 +486,13 @@ namespace Text_Editor
                 return;
             }
             this.mainEditor.Save(path);
+        }
+
+        private void Refresh(object sender, RoutedEventArgs e) {
+            if (!String.IsNullOrEmpty(Globals.path)) {
+                this.fsTree.Items.Clear();
+                open(Globals.path);
+            }
         }
 
         private void Undo(object sender, RoutedEventArgs e) {
