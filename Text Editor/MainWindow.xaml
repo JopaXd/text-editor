@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Text_Editor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="702" Width="1202">
+        Title="Text Editor" Height="702" Width="1202">
     <Grid>
         <Menu Foreground="White" Background="#212121" DockPanel.Dock="Top">
             <MenuItem Header="_File">
