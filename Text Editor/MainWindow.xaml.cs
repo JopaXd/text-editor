@@ -346,7 +346,7 @@ namespace Text_Editor
             //Now, i'm not using open() function because this doesn't add elements to the root of TreeView.
             foreach (string fileOrFolder in foldersAndFiles)
             {
-                if (System.IO.Path.HasExtension(String.Format(@"{0}\{1}", pathToLoad, fileOrFolder)))
+                if (File.Exists(String.Format(@"{0}\{1}", pathToLoad, fileOrFolder)))
                 {
                     //File
                     Orientation hOrientation = Orientation.Horizontal;
@@ -382,6 +382,7 @@ namespace Text_Editor
                     Globals.iconsDirectory = iconsDirectory;
                     string dirNameH = System.IO.Path.GetFileName(fileOrFolder);
                     string dirName = Strings.RemoveSpecialCharacters(dirNameH);
+                    dirName = dirName.Replace(".", "");
                     string icon = String.Format(@"{0}\folder.png", iconsDirectory);
                     folderIcon.Source = new BitmapImage(new Uri(icon));
                     container.Children.Add(folderIcon);
